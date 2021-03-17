@@ -1,6 +1,8 @@
 package tree;
 
 public class TreeNode {
+	private static String nodeLocation = "";
+
 	private TreeNode left;
 	private TreeNode right;
 	private int data;
@@ -10,25 +12,51 @@ public class TreeNode {
 	}
 
 	public TreeNode(TreeNode left, int data, TreeNode right) {
+		this(data);
 		this.left = left;
-		this.data = data;
 		this.right = right;
 	}
 
 	public boolean searchData(int data) {
 		// Searches for a specific data and returns true if it is in the tree.
-		return this.data == data || searchLeftNode(data) || searchRightNode(data);
+		if (this.data == data) {
+			System.out.println("This node contains the data you're looking for.");
+			return true;
+		} else if (searchLeftNode(data)) {
+			nodeLocation = "0" + nodeLocation;
+			System.out.println("nodeLocation = " + nodeLocation);
+			return true;
+		} else if (searchRightNode(data)) {
+			nodeLocation = "1" + nodeLocation;
+			System.out.println("nodeLocation = " + nodeLocation);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public boolean searchLeftNode(int data) {
 		if (left != null) { // if node has left child
-			if (left.getData() == data) {
+			if (left.getData() == data) { // if left child contains the data
 				return true;
 			} else {
-				return left.searchLeftNode(data) || left.searchRightNode(data);
+				if (left.searchLeftNode(data)) {
+					nodeLocation += "0";
+					return true;
+				} else if (left.searchRightNode(data)) {
+					nodeLocation += "1";
+					return true;
+				} else {
+					return false;
+				}
 			}
 		} else { // if no left, check if the current node has the value
-			return this.data == data;
+			if (this.data == data) {
+				nodeLocation += "0";
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
@@ -37,10 +65,23 @@ public class TreeNode {
 			if (right.getData() == data) {
 				return true;
 			} else {
-				return right.searchLeftNode(data) || right.searchRightNode(data);
+				if (right.searchLeftNode(data)) {
+					nodeLocation += "0";
+					return true;
+				} else if (right.searchRightNode(data)) {
+					nodeLocation += "1";
+					return true;
+				} else {
+					return false;
+				}
 			}
 		} else {
-			return this.data == data;
+			if (this.data == data) {
+				nodeLocation += "1";
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 

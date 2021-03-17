@@ -16,6 +16,6 @@ public class TreeRunner {
 		System.out.println("root = " + root);
 
 		root.goDownLeft();
-		System.out.println(root.searchData(15));
+		System.out.println(root.searchData(5));
 	}
 }
